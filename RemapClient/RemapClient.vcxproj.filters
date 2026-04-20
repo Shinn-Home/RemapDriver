@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Client Entry">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx</Extensions>
+    </Filter>
+    <Filter Include="Communication">
+      <UniqueIdentifier>{93995380-89BD-4B04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;inl</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="exe_main.cpp">
+      <Filter>Client Entry</Filter>
+    </ClCompile>
+    <ClCompile Include="DrvComm.cpp">
+      <Filter>Communication</Filter>
+    </ClCompile>
+    <ClCompile Include="DrvClient.cpp">
+      <Filter>Communication</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DrvComm.h">
+      <Filter>Communication</Filter>
+    </ClInclude>
+    <ClInclude Include="DrvClient.h">
+      <Filter>Communication</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

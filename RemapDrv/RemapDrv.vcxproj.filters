@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Entry">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx</Extensions>
+    </Filter>
+    <Filter Include="Comm">
+      <UniqueIdentifier>{67DA6AB6-F800-4C08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>h;hpp;inl</Extensions>
+    </Filter>
+    <Filter Include="Support">
+      <UniqueIdentifier>{8E41214B-6785-4CFE-B992-037D68949A14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Support\PatternScan">
+      <UniqueIdentifier>{2C16A102-6B88-45AF-9A72-FD35DDB69D72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Remap">
+      <UniqueIdentifier>{d1fe813d-5945-4310-ab17-a307824a686b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Comm\InstallComm.cpp">
+      <Filter>Comm</Filter>
+    </ClCompile>
+    <ClCompile Include="Support\PatternScan\SearchCode.cpp">
+      <Filter>Support\PatternScan</Filter>
+    </ClCompile>
+    <ClCompile Include="Support\PatternScan\QueryModule.cpp">
+      <Filter>Support\PatternScan</Filter>
+    </ClCompile>
+    <ClCompile Include="Remap\Remap.cpp">
+      <Filter>Remap</Filter>
+    </ClCompile>
+    <ClCompile Include="Entry\drv_main.cpp">
+      <Filter>Entry</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Comm\DrvCommDef.h">
+      <Filter>Comm</Filter>
+    </ClInclude>
+    <ClInclude Include="Comm\InstallComm.h">
+      <Filter>Comm</Filter>
+    </ClInclude>
+    <ClInclude Include="Support\PatternScan\QueryModule.h">
+      <Filter>Support\PatternScan</Filter>
+    </ClInclude>
+    <ClInclude Include="Support\PatternScan\SearchCode.h">
+      <Filter>Support\PatternScan</Filter>
+    </ClInclude>
+    <ClInclude Include="Remap\Remap.h">
+      <Filter>Remap</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
