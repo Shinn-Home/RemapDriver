@@ -76,6 +76,8 @@ HookCallback(
 
 用户态控制台程序通过 `DrvClient::SendCtl(...)` 打包并发送控制请求：
 
+对应源码：`RemapClient/exe_main.cpp`
+
 ```cpp
 std::array<UCHAR, 0x100> Buffer = {};
 ULONG RetValue = 0;
@@ -88,11 +90,11 @@ const NTSTATUS Status = Client.SendCtl(
 );
 ```
 
-对应源码：`RemapClient/exe_main.cpp`
-
 ### 通信包格式
 
 R3 与 R0 之间传递的数据包定义如下：
+
+对应源码：`RemapDrv/Comm/DrvCommDef.h`
 
 ```cpp
 typedef struct _DRV_COMM_PACKAGE
@@ -104,8 +106,6 @@ typedef struct _DRV_COMM_PACKAGE
     ULONG RetValue;
 } DRV_COMM_PACKAGE, *PDRV_COMM_PACKAGE;
 ```
-
-对应源码：`RemapDrv/Comm/DrvCommDef.h`
 
 ## 4. Supported Environment
 

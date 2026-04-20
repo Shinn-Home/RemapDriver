@@ -76,6 +76,8 @@ HookCallback(
 
 The user-mode console sample packages and sends a control request through `DrvClient::SendCtl(...)`.
 
+Source: `RemapClient/exe_main.cpp`
+
 ```cpp
 std::array<UCHAR, 0x100> Buffer = {};
 ULONG RetValue = 0;
@@ -88,11 +90,11 @@ const NTSTATUS Status = Client.SendCtl(
 );
 ```
 
-Source: `RemapClient/exe_main.cpp`
-
 ### Communication Package Format
 
 The data structure exchanged between R3 and R0 is defined as follows:
+
+Source: `RemapDrv/Comm/DrvCommDef.h`
 
 ```cpp
 typedef struct _DRV_COMM_PACKAGE
@@ -104,8 +106,6 @@ typedef struct _DRV_COMM_PACKAGE
     ULONG RetValue;
 } DRV_COMM_PACKAGE, *PDRV_COMM_PACKAGE;
 ```
-
-Source: `RemapDrv/Comm/DrvCommDef.h`
 
 ## 4. Supported Environment
 
