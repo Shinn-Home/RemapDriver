@@ -2,29 +2,29 @@
 
 [English](README.md) | 中文文档
 
-> 面向 Windows x64 的驱动"隐蔽"通信研究项目，通过重映射驱动镜像并接管目标系统调用回调指针，在 R3 与 R0 之间建立一条较为隐蔽的"无痕"通信路径。
+> 面向 Windows x64 的驱动通信研究项目。它通过重映射驱动镜像并接管目标系统调用回调指针，在 R3 与 R0 之间建立一条相对隐蔽的通信路径。
 
-## 1. Project Name
+## 1. 项目名称
 
 **RemapDrv**
 
-## 2. Overview
+## 2. 项目简介
 
-`RemapDrv` 演示了一种基于系统调用回调劫持的驱动通信思路。项目包含内核侧驱动样例与用户态控制台样例，覆盖了以下几个核心环节：
+`RemapDrv` 演示了一种基于系统调用回调劫持的驱动通信思路。仓库同时包含内核态驱动样例与用户态控制台样例，覆盖以下核心部分：
 
-- 驱动自重映射与重定位，此时常规扫描手动、ARK工具无法找到驱动模块信息
-- 回调安装与简单的通信分发测试
+- 驱动自重映射与重定位，此时常规手扫和部分 ARK 工具可能无法直接定位驱动模块信息
+- 回调安装与基础通信分发测试
 - R3 侧通信包封装与控制码调用
 
-下图为劫持通讯实现点：
+下图展示了本项目使用的通信 Hook 点：
 
 ![HookComm](Image/HookComm.png)
 
-## 3. Features / Usage Example
+## 3. 功能与使用示例
 
 ### 驱动入口
 
-驱动入口会先将自身镜像重映射到新的内存区域，再计算重映射后回调函数的地址并安装通信回调：
+驱动入口会先将自身镜像重映射到新的内存区域，再计算重映射后的回调地址并安装通信回调。
 
 对应源码：`RemapDrv/Entry/drv_main.cpp`
 
@@ -48,7 +48,7 @@ DriverEntry(
 
 ### 通信回调
 
-回调函数会检查通信包的合法性，识别自定义 `Magic` 与 `CtlCode`，非目标调用则转发给原始回调：
+回调函数会校验通信包是否合法，识别自定义 `Magic` 与 `CtlCode`，非目标调用则继续转发给原始回调。
 
 对应源码：`RemapDrv/Entry/drv_main.cpp`
 
@@ -92,7 +92,7 @@ const NTSTATUS Status = Client.SendCtl(
 
 ### 通信包格式
 
-R3 与 R0 之间传递的数据包定义如下：
+R3 与 R0 之间交换的数据结构定义如下：
 
 对应源码：`RemapDrv/Comm/DrvCommDef.h`
 
@@ -107,7 +107,7 @@ typedef struct _DRV_COMM_PACKAGE
 } DRV_COMM_PACKAGE, *PDRV_COMM_PACKAGE;
 ```
 
-## 4. Supported Environment
+## 4. 支持环境
 
 ### 已测试系统版本
 
@@ -116,15 +116,25 @@ typedef struct _DRV_COMM_PACKAGE
 - Windows 11 24H2
 - Windows 11 25H2
 
+### 通讯测试截图
+
+Windows 10 19044：
+
+![CommTestWin10](Image/CommTest_19044.png)
+
+Windows 11 25H2：
+
+![CommTestWin11](Image/CommTest_25H2.png)
+
 ### 预期兼容范围
 
-由于当前仅在以上虚拟机环境中完成测试，现阶段可以确认的测试结果仅限于上述版本。结合当前代码中的版本分支与特征码处理逻辑，理论上支持：
+当前只在上述虚拟机环境中完成验证。结合代码中的版本分支与特征码匹配逻辑，理论上可预期支持：
 
 - Windows 10 19041 ~ Windows 11 25H2
 
-实际兼容性仍建议以目标系统的实测结果为准。
+实际兼容性仍建议以目标系统实测结果为准。
 
-## 5. Build
+## 5. 构建
 
 ### 构建环境
 
@@ -132,27 +142,29 @@ typedef struct _DRV_COMM_PACKAGE
 - WDK 10
 - 仅支持 `x64`
 
-### 构建方式
+### 构建步骤
 
 1. 使用 Visual Studio 2017 打开 `RemapDrv.sln`
 2. 选择目标平台为 `x64`
 3. 编译 `RemapDrv` 驱动项目
 4. 编译 `RemapClient` 控制台项目
 
-## 6. Repository Layout
+## 6. 仓库结构
 
 ```text
 .
-├─Image/
-│  └─HookComm.bmp
-├─RemapClient/
-│  ├─exe_main.cpp              调用入口示例
-│  ├─DrvClient.cpp/.h          用户态通信封装
-│  └─DrvComm.cpp/.h            低层发送逻辑
-├─RemapDrv/   
-│  ├─Entry/                    DriverEntry 与 HookCallback
-│  ├─Comm/                     通信安装与通信包定义
-│  ├─Remap/                    驱动自重映射逻辑
-│  └─Support/PatternScan/      模块查询与特征码扫描辅助代码
-└─RemapDrv.sln
++-- Image/
+|   +-- HookComm.png
+|   +-- CommTest_19044.png
+|   +-- CommTest_25H2.png
++-- RemapClient/
+|   +-- exe_main.cpp              Invocation entry example
+|   +-- DrvClient.cpp/.h          User-mode communication wrapper
+|   +-- DrvComm.cpp/.h            Low-level sending logic
++-- RemapDrv/
+|   +-- Entry/                    DriverEntry and HookCallback
+|   +-- Comm/                     Communication installation and packet definitions
+|   +-- Remap/                    Driver self-remapping logic
+|   +-- Support/PatternScan/      Module lookup and signature scanning helpers
++-- RemapDrv.sln
 ```
