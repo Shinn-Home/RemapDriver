@@ -4,6 +4,10 @@ English | [中文文档](README.zh-CN.md)
 
 > A Windows x64 driver communication research project that explores a relatively covert communication path between R3 and R0 by remapping the driver image and taking over a target system-call callback pointer.
 
+## Origin
+
+This repository is a code-experiment and implementation companion to the Kanxue forum article ["无痕"驱动的检测与分析：重映射驱动靶场构造、扫描与特征剥离，附源码](https://bbs.kanxue.com/thread-290922.htm). The projects here mirror and validate the detection ideas discussed in that post.
+
 ## 1. Project Name
 
 **RemapDrv**
