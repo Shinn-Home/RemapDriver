@@ -62,6 +62,18 @@ InstallComm (
 		CodeAddr = 0;
 	}
 
+	// Win11 26H1
+	if (0 == CodeAddr && VersionInformation.dwBuildNumber == 28000)
+	{
+		CodeAddr = SearchFeatureCode(
+			"ntoskrnl.exe",
+			"PAGE",
+			(PCUCHAR)"\x48\x8B\x05\xBC\xE1\x44\x00\x85\xC9\x49\x8B\xCA\x41\x0F\x95\xC0\xE8\x46\x9B\xC7\xFF\x48\x83\xC4\x38\xC3",
+			"xxx????xxxxxxxxxx????xxx?x",
+			0
+		);
+	}
+
 	if (0 == CodeAddr)
 	{
 		DbgPrint("-------------------------Err: Search code failed. \n");
